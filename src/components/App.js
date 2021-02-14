@@ -2,20 +2,20 @@ import { useReducer } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import reducer from "../reducers";
-import index from "./Index";
-import add from "./Add";
-import { Container } from "react-bootstrap";
+import Lists from "./Lists";
+import Add from "./Add";
+import { Container } from "@material-ui/core";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, { task: [] });
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <Container className="py-5">
+      <Container fluid className="py-5">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={index} />
-            <Route exact path="/add" component={add} />
+            <Route exact path="/" component={Lists} />
+            <Route exact path="/add" component={Add} />
           </Switch>
         </BrowserRouter>
       </Container>
