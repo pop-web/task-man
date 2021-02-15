@@ -4,6 +4,7 @@ import AppContext from "../contexts/AppContext";
 import reducer from "../reducers";
 import Lists from "./Lists";
 import Add from "./Add";
+import AppBar from "./AppBar";
 import { Container } from "@material-ui/core";
 
 const App = () => {
@@ -11,7 +12,8 @@ const App = () => {
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <Container fluid className="py-5">
+      <AppBar />
+      <Container>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Lists} />
