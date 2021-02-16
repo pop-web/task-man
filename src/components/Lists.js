@@ -1,9 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
-
 import {
-  Fab,
   Avatar,
   Grid,
   Typography,
@@ -13,9 +10,10 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
+  makeStyles,
 } from "@material-ui/core";
-import { Add as AddIcon, Delete, Folder } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
+import { Delete as DeleteIcon, Folder as FolderIcon } from "@material-ui/icons";
+import FormDialog from "./FormDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,23 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists = () => {
+const Lists = (props) => {
   const { state } = useContext(AppContext);
   const classes = useStyles();
   const [dense, setDense] = useState(false);
   const [secondary, setSecondary] = useState(true);
 
+  console.log(props);
   return (
     <div className={classes.root}>
-      <Fab
-        color="primary"
-        aria-label="add"
-        component={Link}
-        to={"/add"}
-        className={classes.addBtn}
-      >
-        <AddIcon />
-      </Fab>
+      <FormDialog />
       <Grid item container>
         <Grid item xs={12}>
           <Typography variant="h6" className={classes.title}>
@@ -63,7 +54,7 @@ const Lists = () => {
                 <ListItem divider={true}>
                   <ListItemAvatar>
                     <Avatar>
-                      <Folder />
+                      <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
@@ -72,7 +63,7 @@ const Lists = () => {
                   />
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete">
-                      <Delete />
+                      <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>

@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import reducer from "../reducers";
 import Lists from "./Lists";
-import Add from "./Add";
+import AddTaskForm from "./AddTaskForm";
 import AppBar from "./AppBar";
 import { Container } from "@material-ui/core";
 
@@ -17,7 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Lists} />
-            <Route exact path="/add" component={Add} />
+            <Route exact path="/add" component={AddTaskForm} />
           </Switch>
         </BrowserRouter>
       </Container>
