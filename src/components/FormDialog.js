@@ -27,7 +27,7 @@ const AddFormDialog = () => {
       >
         <AddIcon />
       </Fab>
-      <AddTaskForm open={open} />
+      <AddTaskForm open={open} setOpen={setOpen} />
     </div>
   );
 };

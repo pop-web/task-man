@@ -1,6 +1,6 @@
 import { CREATE_TASK } from "../actions";
 
-const events = (state = [], action) => {
+const tasks = (state = [], action) => {
   switch (action.type) {
     case CREATE_TASK:
       const event = { title: action.title, detail: action.detail };
@@ -12,4 +12,4 @@ const events = (state = [], action) => {
   }
 };
 
-export default events;
+export default tasks;

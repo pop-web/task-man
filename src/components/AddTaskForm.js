@@ -11,9 +11,8 @@ import {
   Dialog,
 } from "@material-ui/core";
 
-const AddTaskForm = ({ open }) => {
+const AddTaskForm = ({ open, setOpen }) => {
   const { dispatch } = useContext(AppContext);
-  //const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const addTask = (e) => {
@@ -30,7 +29,7 @@ const AddTaskForm = ({ open }) => {
     e.preventDefault();
   };
   const handleClose = () => {
-    //setOpen(false);
+    setOpen(false);
   };
   return (
     <>
