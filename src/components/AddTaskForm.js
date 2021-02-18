@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
+import { CREATE_TASK, MODAL_CLOSE } from "../actions";
 import AppContext from "../contexts/AppContext";
-import { CREATE_TASK } from "../actions";
 
 import {
   Button,
@@ -11,8 +11,8 @@ import {
   Dialog,
 } from "@material-ui/core";
 
-const AddTaskForm = ({ open, setOpen }) => {
-  const { dispatch } = useContext(AppContext);
+const AddTaskForm = () => {
+  const { state, dispatch } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const addTask = (e) => {
@@ -22,19 +22,27 @@ const AddTaskForm = ({ open, setOpen }) => {
       title,
       detail,
     });
+    dispatch({
+      type: MODAL_CLOSE,
+    });
     setTitle("");
     setDetail("");
   };
   const cancelTask = (e) => {
     e.preventDefault();
+    dispatch({
+      type: MODAL_CLOSE,
+    });
   };
   const handleClose = () => {
-    setOpen(false);
+    dispatch({
+      type: MODAL_CLOSE,
+    });
   };
   return (
     <>
       <Dialog
-        open={open}
+        open={state.modal}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >

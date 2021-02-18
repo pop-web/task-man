@@ -3,12 +3,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import reducer from "../reducers";
 import Lists from "./Lists";
-import AddTaskForm from "./AddTaskForm";
+import Login from "./Login";
 import AppBar from "./AppBar";
 import { Container } from "@material-ui/core";
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, { task: [] });
+  const [state, dispatch] = useReducer(reducer, { task: [], modal: false });
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
@@ -17,7 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Lists} />
-            <Route exact path="/add" component={AddTaskForm} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </BrowserRouter>
       </Container>

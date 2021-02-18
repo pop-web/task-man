@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import AppContext from "../contexts/AppContext";
+import FormDialog from "./FormDialog";
 import {
   Avatar,
   Grid,
@@ -13,7 +14,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Delete as DeleteIcon, Folder as FolderIcon } from "@material-ui/icons";
-import FormDialog from "./FormDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
 const Lists = (props) => {
   const { state } = useContext(AppContext);
   const classes = useStyles();
-  const [dense, setDense] = useState(false);
-  const [secondary, setSecondary] = useState(true);
+  const [dense] = useState(false);
+  const [secondary] = useState(true);
 
-  console.log(props);
+  console.log(state);
   return (
     <div className={classes.root}>
       <FormDialog />

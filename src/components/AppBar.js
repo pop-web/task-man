@@ -45,7 +45,7 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
       <FormGroup>
-        {/* <FormControlLabel
+        <FormControlLabel
           control={
             <Switch
               checked={auth}
@@ -54,7 +54,7 @@ export default function MenuAppBar() {
             />
           }
           label={auth ? "Logout" : "Login"}
-        /> */}
+        />
       </FormGroup>
       <AppBar position="static">
         <Toolbar>
