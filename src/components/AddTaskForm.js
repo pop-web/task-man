@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { CREATE_TASK, MODAL_CLOSE } from "../actions";
+import { useContext, useState, useEffect } from "react";
+import { MODAL_CLOSE } from "../actions";
 import AppContext from "../contexts/AppContext";
 
 import {
@@ -11,16 +11,22 @@ import {
   Dialog,
 } from "@material-ui/core";
 
+import firebase, { db } from "../firebase";
+
 const AddTaskForm = () => {
   const { state, dispatch } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [addDisabled, setAddDisabled] = useState(true);
+
   const addTask = (e) => {
     e.preventDefault();
-    dispatch({
-      type: CREATE_TASK,
+    const docId = db.collection("tasks").doc().id;
+    db.collection("tasks").doc(docId).set({
+      docId: docId,
       title,
       detail,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     dispatch({
       type: MODAL_CLOSE,
@@ -39,6 +45,12 @@ const AddTaskForm = () => {
       type: MODAL_CLOSE,
     });
   };
+
+  useEffect(() => {
+    const disabled = title === "";
+    setAddDisabled(disabled);
+  }, [title]);
+
   return (
     <>
       <Dialog
@@ -49,6 +61,7 @@ const AddTaskForm = () => {
         <DialogTitle id="form-dialog-title">タスクを追加</DialogTitle>
         <DialogContent>
           <TextField
+            required
             label="件名"
             autoFocus
             autoComplete="off"
@@ -72,7 +85,7 @@ const AddTaskForm = () => {
             variant="outlined"
           />
           <DialogActions>
-            <Button color="primary" onClick={addTask}>
+            <Button color="primary" onClick={addTask} disabled={addDisabled}>
               追加
             </Button>{" "}
             <Button color="primary" onClick={cancelTask}>

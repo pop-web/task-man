@@ -8,7 +8,11 @@ import AppBar from "./AppBar";
 import { Container } from "@material-ui/core";
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, { task: [], modal: false });
+  const initialState = {
+    modal: false,
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

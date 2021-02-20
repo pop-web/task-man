@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../contexts/AppContext";
 import FormDialog from "./FormDialog";
 import {
@@ -13,7 +13,13 @@ import {
   IconButton,
   makeStyles,
 } from "@material-ui/core";
-import { Delete as DeleteIcon, Folder as FolderIcon } from "@material-ui/icons";
+import {
+  Folder as FolderIcon,
+  MoreHoriz as MoreHorizIcon,
+} from "@material-ui/icons";
+import { MODAL_OPEN } from "../actions";
+
+import { db } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +39,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists = (props) => {
-  const { state } = useContext(AppContext);
+const Lists = () => {
+  const { state, dispatch } = useContext(AppContext);
+  const [tasks, setTasks] = useState([]);
   const classes = useStyles();
-  const [dense] = useState(false);
-  const [secondary] = useState(true);
 
-  console.log(state);
+  //データ取得
+  const getData = async () => {
+    const colRef = db
+      .collection("tasks")
+      .orderBy("createdAt", "desc")
+      .limit(10);
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    await setTasks(docs);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const handleEditOpen = () => {
+    dispatch({
+      type: MODAL_OPEN,
+    });
+  };
+
+  console.log(tasks);
   return (
     <div className={classes.root}>
       <FormDialog />
@@ -49,21 +75,23 @@ const Lists = (props) => {
             タスク一覧
           </Typography>
           <div className={classes.demo}>
-            <List dense={dense}>
-              {state.task.map((task) => (
-                <ListItem divider={true}>
+            <List>
+              {tasks.map((task, index) => (
+                <ListItem
+                  key={index}
+                  divider={true}
+                  button={true}
+                  onClick={handleEditOpen}
+                >
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText
-                    primary={task.title}
-                    secondary={secondary ? "Secondary text" : null}
-                  />
+                  <ListItemText primary={task.title} />
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
+                      <MoreHorizIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
