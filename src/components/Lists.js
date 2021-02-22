@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import AppContext from "../contexts/AppContext";
 import FormDialog from "./FormDialog";
 import {
@@ -40,8 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Lists = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
   const [tasks, setTasks] = useState([]);
+  const AddTaskFormRef = useRef(null);
   const classes = useStyles();
 
   //データ取得
@@ -52,23 +53,24 @@ const Lists = () => {
       .limit(10);
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
-    await setTasks(docs);
+    setTasks(docs);
   };
 
   useEffect(() => {
+    console.log(tasks);
     getData();
   }, []);
 
-  const handleEditOpen = () => {
+  const handleEditOpen = (task) => {
     dispatch({
       type: MODAL_OPEN,
     });
+    AddTaskFormRef.current.setTask(task);
   };
-
-  console.log(tasks);
+  console.log(getData);
   return (
     <div className={classes.root}>
-      <FormDialog />
+      <FormDialog AddTaskFormRef={AddTaskFormRef} />
       <Grid item container>
         <Grid item xs={12}>
           <Typography variant="h6" className={classes.title}>
@@ -81,7 +83,7 @@ const Lists = () => {
                   key={index}
                   divider={true}
                   button={true}
-                  onClick={handleEditOpen}
+                  onClick={() => handleEditOpen(task)}
                 >
                   <ListItemAvatar>
                     <Avatar>

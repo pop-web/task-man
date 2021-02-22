@@ -1,4 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useImperativeHandle,
+} from "react";
 import { MODAL_CLOSE } from "../actions";
 import AppContext from "../contexts/AppContext";
 
@@ -13,11 +18,19 @@ import {
 
 import firebase, { db } from "../firebase";
 
-const AddTaskForm = () => {
+const AddTaskForm = React.forwardRef((_, ref) => {
   const { state, dispatch } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [addDisabled, setAddDisabled] = useState(true);
+
+  // Listsコンポーネント側でtaskを渡し実行
+  useImperativeHandle(ref, () => ({
+    setTask: (task) => {
+      setTitle(task.title);
+      setDetail(task.detail);
+    },
+  }));
 
   const addTask = (e) => {
     e.preventDefault();
@@ -96,6 +109,6 @@ const AddTaskForm = () => {
       </Dialog>
     </>
   );
-};
+});
 
 export default AddTaskForm;

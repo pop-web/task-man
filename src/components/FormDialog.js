@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddFormDialog = () => {
+const AddFormDialog = ({ AddTaskFormRef }) => {
   const { dispatch } = useContext(AppContext);
   const classes = useStyles();
   const handleClickOpen = () => {
@@ -31,7 +31,7 @@ const AddFormDialog = () => {
       >
         <AddIcon />
       </Fab>
-      <AddTaskForm />
+      <AddTaskForm ref={AddTaskFormRef} />
     </div>
   );
 };
