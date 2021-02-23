@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     right: 12,
     bottom: 12,
+    zIndex: 1000,
   },
 }));
 
@@ -57,7 +58,6 @@ const Lists = () => {
   };
 
   useEffect(() => {
-    console.log(tasks);
     getData();
   }, []);
 
