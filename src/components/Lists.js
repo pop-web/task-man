@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import AppContext from "../contexts/AppContext";
 import FormDialog from "./FormDialog";
 import {
@@ -17,7 +17,7 @@ import {
   Folder as FolderIcon,
   MoreHoriz as MoreHorizIcon,
 } from "@material-ui/icons";
-import { MODAL_OPEN } from "../actions";
+import { MODAL_OPEN, READ_TASKS } from "../actions";
 
 import { db } from "../firebase";
 
@@ -32,17 +32,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
-  addBtn: {
-    position: "fixed",
-    right: 12,
-    bottom: 12,
-    zIndex: 1000,
-  },
 }));
 
 const Lists = () => {
-  const { dispatch } = useContext(AppContext);
-  const [tasks, setTasks] = useState([]);
+  const { state, dispatch } = useContext(AppContext);
   const AddTaskFormRef = useRef(null);
   const classes = useStyles();
 
@@ -54,7 +47,10 @@ const Lists = () => {
       .limit(10);
     const snapshots = await colRef.get();
     const docs = snapshots.docs.map((doc) => doc.data());
-    setTasks(docs);
+    dispatch({
+      type: READ_TASKS,
+      tasks: docs,
+    });
   };
 
   useEffect(() => {
@@ -78,7 +74,7 @@ const Lists = () => {
           </Typography>
           <div className={classes.demo}>
             <List>
-              {tasks.map((task, index) => (
+              {state.tasks.map((task, index) => (
                 <ListItem
                   key={index}
                   divider={true}

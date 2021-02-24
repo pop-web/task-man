@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useImperativeHandle,
 } from "react";
-import { MODAL_CLOSE } from "../actions";
+import { MODAL_CLOSE, READ_TASKS } from "../actions";
 import AppContext from "../contexts/AppContext";
 
 import {
@@ -32,6 +32,20 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     },
   }));
 
+  //データ取得
+  const getData = async () => {
+    const colRef = db
+      .collection("tasks")
+      .orderBy("createdAt", "desc")
+      .limit(10);
+    const snapshots = await colRef.get();
+    const docs = snapshots.docs.map((doc) => doc.data());
+    dispatch({
+      type: READ_TASKS,
+      tasks: docs,
+    });
+  };
+
   const addTask = (e) => {
     e.preventDefault();
     const docId = db.collection("tasks").doc().id;
@@ -46,6 +60,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     });
     setTitle("");
     setDetail("");
+    getData();
   };
   const cancelTask = (e) => {
     e.preventDefault();
@@ -57,6 +72,8 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     dispatch({
       type: MODAL_CLOSE,
     });
+    setTitle("");
+    setDetail("");
   };
 
   useEffect(() => {

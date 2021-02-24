@@ -10,6 +10,7 @@ import { Container } from "@material-ui/core";
 const App = () => {
   const initialState = {
     modal: false,
+    tasks: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
