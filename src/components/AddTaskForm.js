@@ -20,13 +20,15 @@ import firebase, { db } from "../firebase";
 
 const AddTaskForm = React.forwardRef((_, ref) => {
   const { state, dispatch } = useContext(AppContext);
+  const [docId, setDocId] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
-  const [addDisabled, setAddDisabled] = useState(true);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   // Listsコンポーネント側でtaskを渡し実行
   useImperativeHandle(ref, () => ({
     setTask: (task) => {
+      setDocId(task.docId);
       setTitle(task.title);
       setDetail(task.detail);
     },
@@ -48,9 +50,9 @@ const AddTaskForm = React.forwardRef((_, ref) => {
 
   const addTask = (e) => {
     e.preventDefault();
-    const docId = db.collection("tasks").doc().id;
-    db.collection("tasks").doc(docId).set({
-      docId: docId,
+    const newDocId = db.collection("tasks").doc().id;
+    db.collection("tasks").doc(newDocId).set({
+      docId: newDocId,
       title,
       detail,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -62,6 +64,23 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     setDetail("");
     getData();
   };
+
+  const updateTask = (e) => {
+    e.preventDefault();
+    db.collection("tasks").doc(docId).update({
+      docId,
+      title,
+      detail,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    dispatch({
+      type: MODAL_CLOSE,
+    });
+    setTitle("");
+    setDetail("");
+    getData();
+  };
+
   const cancelTask = (e) => {
     e.preventDefault();
     dispatch({
@@ -78,7 +97,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
 
   useEffect(() => {
     const disabled = title === "";
-    setAddDisabled(disabled);
+    setSubmitDisabled(disabled);
   }, [title]);
 
   return (
@@ -115,8 +134,15 @@ const AddTaskForm = React.forwardRef((_, ref) => {
             variant="outlined"
           />
           <DialogActions>
-            <Button color="primary" onClick={addTask} disabled={addDisabled}>
+            <Button color="primary" onClick={addTask} disabled={submitDisabled}>
               追加
+            </Button>{" "}
+            <Button
+              color="primary"
+              onClick={updateTask}
+              disabled={submitDisabled}
+            >
+              更新
             </Button>{" "}
             <Button color="primary" onClick={cancelTask}>
               キャンセル

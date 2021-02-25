@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddFormDialog = ({ AddTaskFormRef }) => {
+const OpenModalButton = ({ AddTaskFormRef }) => {
   const { dispatch } = useContext(AppContext);
   const classes = useStyles();
   const handleClickOpen = () => {
@@ -37,4 +37,4 @@ const AddFormDialog = ({ AddTaskFormRef }) => {
   );
 };
 
-export default AddFormDialog;
+export default OpenModalButton;

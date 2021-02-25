@@ -1,23 +1,9 @@
 import { useContext, useEffect, useRef } from "react";
 import AppContext from "../contexts/AppContext";
-import FormDialog from "./FormDialog";
-import {
-  Avatar,
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  ListItemSecondaryAction,
-  IconButton,
-  makeStyles,
-} from "@material-ui/core";
-import {
-  Folder as FolderIcon,
-  MoreHoriz as MoreHorizIcon,
-} from "@material-ui/icons";
-import { MODAL_OPEN, READ_TASKS } from "../actions";
+import OpenModalButton from "./OpenModalButton";
+import ListsItem from "./ListsItem";
+import { Grid, Typography, List, makeStyles } from "@material-ui/core";
+import { READ_TASKS } from "../actions";
 
 import { db } from "../firebase";
 
@@ -26,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     maxWidth: "100%",
   },
-  demo: {
+  bg: {
     backgroundColor: theme.palette.background.paper,
   },
   title: {
@@ -36,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Lists = () => {
   const { state, dispatch } = useContext(AppContext);
-  const AddTaskFormRef = useRef(null);
   const classes = useStyles();
+  const AddTaskFormRef = useRef(null);
 
   //データ取得
   const getData = async () => {
@@ -55,44 +41,26 @@ const Lists = () => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
 
-  const handleEditOpen = (task) => {
-    dispatch({
-      type: MODAL_OPEN,
-    });
-    AddTaskFormRef.current.setTask(task);
-  };
   console.log(getData);
   return (
     <div className={classes.root}>
-      <FormDialog AddTaskFormRef={AddTaskFormRef} />
+      <OpenModalButton AddTaskFormRef={AddTaskFormRef} />
       <Grid item container>
         <Grid item xs={12}>
           <Typography variant="h6" className={classes.title}>
             タスク一覧
           </Typography>
-          <div className={classes.demo}>
+          <div className={classes.bg}>
             <List>
               {state.tasks.map((task, index) => (
-                <ListItem
+                <ListsItem
                   key={index}
-                  divider={true}
-                  button={true}
-                  onClick={() => handleEditOpen(task)}
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary={task.title} />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                      <MoreHorizIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
+                  task={task}
+                  AddTaskFormRef={AddTaskFormRef}
+                />
               ))}
             </List>
           </div>
