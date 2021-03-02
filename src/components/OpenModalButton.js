@@ -25,7 +25,7 @@ const OpenModalButton = ({ AddTaskFormRef }) => {
   return (
     <div>
       <Fab
-        color="primary"
+        color="secondary"
         aria-label="add"
         className={classes.addBtn}
         onClick={handleClickOpen}

@@ -5,7 +5,10 @@ import reducer from "../reducers";
 import Lists from "./Lists";
 import Login from "./Login";
 import AppBar from "./AppBar";
+import CopyRight from "./CopyRight";
 import { Container } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "../theme";
 
 const App = () => {
   const initialState = {
@@ -16,17 +19,20 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      <AppBar />
-      <Container>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={Lists} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </BrowserRouter>
-      </Container>
-    </AppContext.Provider>
+    <ThemeProvider theme={theme}>
+      <AppContext.Provider value={{ state, dispatch }}>
+        <AppBar />
+        <Container>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Lists} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </BrowserRouter>
+        </Container>
+        <CopyRight />
+      </AppContext.Provider>
+    </ThemeProvider>
   );
 };
 

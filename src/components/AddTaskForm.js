@@ -6,7 +6,6 @@ import React, {
 } from "react";
 import { MODAL_CLOSE, READ_TASKS } from "../actions";
 import AppContext from "../contexts/AppContext";
-
 import {
   Button,
   TextField,
@@ -15,7 +14,6 @@ import {
   DialogActions,
   Dialog,
 } from "@material-ui/core";
-
 import firebase, { db } from "../firebase";
 
 const AddTaskForm = React.forwardRef((_, ref) => {
@@ -23,6 +21,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
   const [docId, setDocId] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   // Listsコンポーネント側でtaskを渡し実行
@@ -107,7 +106,9 @@ const AddTaskForm = React.forwardRef((_, ref) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">タスクを追加</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {isEditing ? "タスクを編集" : "タスクを追加"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             required
