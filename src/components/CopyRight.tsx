@@ -1,7 +1,7 @@
 import Link from "@material-ui/core/Link";
 import { Box, Typography } from "@material-ui/core";
 
-const Copyright = () => {
+const Copyright:React.FC = () => {
   return (
     <Box mt={8}>
       <Typography variant="body2" color="textSecondary" align="center">

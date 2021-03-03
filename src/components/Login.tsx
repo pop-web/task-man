@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogIn = () => {
+const LogIn:React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const classes = useStyles();
 
@@ -51,7 +51,6 @@ const LogIn = () => {
               try {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 const res = await firebase.auth().signInWithPopup(provider);
-                console.log(res.user.displayName);
               } catch (e) {
                 alert(e.message);
               }

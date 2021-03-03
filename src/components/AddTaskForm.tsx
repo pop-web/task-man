@@ -2,7 +2,6 @@ import React, {
   useContext,
   useState,
   useEffect,
-  useImperativeHandle,
 } from "react";
 import { MODAL_CLOSE, READ_TASKS } from "../actions";
 import AppContext from "../contexts/AppContext";
@@ -16,22 +15,13 @@ import {
 } from "@material-ui/core";
 import firebase, { db } from "../firebase";
 
-const AddTaskForm = React.forwardRef((_, ref) => {
+const AddTaskForm:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [docId, setDocId] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(true);
-
-  // Listsコンポーネント側でtaskを渡し実行
-  useImperativeHandle(ref, () => ({
-    setTask: (task) => {
-      setDocId(task.docId);
-      setTitle(task.title);
-      setDetail(task.detail);
-    },
-  }));
 
   //データ取得
   const getData = async () => {
@@ -47,7 +37,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     });
   };
 
-  const addTask = (e) => {
+  const addTask = (e:any) => {
     e.preventDefault();
     const newDocId = db.collection("tasks").doc().id;
     db.collection("tasks").doc(newDocId).set({
@@ -64,7 +54,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     getData();
   };
 
-  const updateTask = (e) => {
+  const updateTask = (e:any) => {
     e.preventDefault();
     db.collection("tasks").doc(docId).update({
       docId,
@@ -80,7 +70,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
     getData();
   };
 
-  const cancelTask = (e) => {
+  const cancelTask = (e:any) => {
     e.preventDefault();
     dispatch({
       type: MODAL_CLOSE,
@@ -118,7 +108,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
             type="text"
             margin="dense"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e:any) => setTitle(e.target.value)}
             fullWidth
             variant="outlined"
           />
@@ -129,7 +119,7 @@ const AddTaskForm = React.forwardRef((_, ref) => {
             autoComplete="off"
             margin="dense"
             value={detail}
-            onChange={(e) => setDetail(e.target.value)}
+            onChange={(e:any) => setDetail(e.target.value)}
             fullWidth
             rows={4}
             variant="outlined"
@@ -153,6 +143,6 @@ const AddTaskForm = React.forwardRef((_, ref) => {
       </Dialog>
     </>
   );
-});
+};
 
 export default AddTaskForm;

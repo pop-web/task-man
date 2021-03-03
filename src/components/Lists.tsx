@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists = () => {
+const Lists:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const classes = useStyles();
   const AddTaskFormRef = useRef(null);
@@ -47,7 +47,7 @@ const Lists = () => {
   console.log(getData);
   return (
     <div className={classes.root}>
-      <OpenModalButton AddTaskFormRef={AddTaskFormRef} />
+      <OpenModalButton />
       <Grid item container>
         <Grid item xs={12}>
           <Typography variant="h6" className={classes.title}>
@@ -55,11 +55,10 @@ const Lists = () => {
           </Typography>
           <div className={classes.bg}>
             <List>
-              {state.tasks.map((task, index) => (
+              {state.tasks.map((task:any, index:number) => (
                 <ListsItem
                   key={index}
                   task={task}
-                  AddTaskFormRef={AddTaskFormRef}
                 />
               ))}
             </List>

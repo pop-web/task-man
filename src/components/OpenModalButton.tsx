@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OpenModalButton = ({ AddTaskFormRef }) => {
+const OpenModalButton:React.FC = () => {
   const { dispatch } = useContext(AppContext);
   const classes = useStyles();
   const handleClickOpen = () => {
@@ -32,7 +32,7 @@ const OpenModalButton = ({ AddTaskFormRef }) => {
       >
         <AddIcon />
       </Fab>
-      <AddTaskForm ref={AddTaskFormRef} />
+      <AddTaskForm />
     </div>
   );
 };

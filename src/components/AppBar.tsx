@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuAppBar() {
+const MenuAppBar:React.FC = () => {
   const classes = useStyles();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
+  const handleChange = (e:any) => {
+    setAuth(e.target.checked);
   };
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenu = (e:any) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
@@ -106,3 +106,5 @@ export default function MenuAppBar() {
     </div>
   );
 }
+
+export default MenuAppBar

@@ -18,19 +18,18 @@ import {
 } from "@material-ui/icons";
 import { db } from "../firebase";
 
-const ListsItem = ({ task, AddTaskFormRef }) => {
+const ListsItem = ({ task }: {task: any}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { dispatch } = useContext(AppContext);
 
-  const handleEdit = (task) => {
+  const handleEdit = (task:any) => {
     dispatch({
       type: MODAL_OPEN,
     });
-    AddTaskFormRef.current.setTask(task);
     handleClose();
   };
 
-  const handleDelete = async (task) => {
+  const handleDelete = async (task:any) => {
     //データ削除
     try {
       await db.collection("tasks").doc(task.docId).delete();
@@ -52,8 +51,8 @@ const ListsItem = ({ task, AddTaskFormRef }) => {
     handleClose();
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e:any) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
