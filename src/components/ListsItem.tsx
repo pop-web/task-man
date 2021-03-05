@@ -18,7 +18,16 @@ import {
 } from "@material-ui/icons";
 import { db } from "../firebase";
 
-const ListsItem = ({ task }: {task: any}) => {
+interface Props{
+  task:{
+    docId:string,
+    title:string,
+    detail:string,
+    CreatedAt:object
+  }
+}
+
+const ListsItem:React.FC<Props> = ({task}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { dispatch } = useContext(AppContext);
 
