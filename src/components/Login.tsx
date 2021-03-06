@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useContext } from "react";
+import AppContext from "../contexts/AppContext";
+import { LOGIN } from "../actions";
+import { Redirect } from "react-router-dom";
 import { Avatar, Button, CssBaseline, Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,10 +28,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogIn:React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
+const LogIn: React.FC = (props: any) => {
   const classes = useStyles();
+  const { state, dispatch } = useContext(AppContext);
 
+  const Login = async (e: any) => {
+    e.preventDefault();
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const user = await firebase.auth().signInWithPopup(provider);
+      if (user) {
+        dispatch({
+          type: LOGIN,
+          user,
+        });
+      }
+      props.history.push("/");
+    } catch (e) {
+      alert(e.message);
+    }
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -46,15 +65,7 @@ const LogIn:React.FC = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={async (e) => {
-              e.preventDefault();
-              try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const res = await firebase.auth().signInWithPopup(provider);
-              } catch (e) {
-                alert(e.message);
-              }
-            }}
+            onClick={Login}
           >
             Googleでログイン
           </Button>

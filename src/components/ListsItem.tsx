@@ -18,27 +18,27 @@ import {
 } from "@material-ui/icons";
 import { db } from "../firebase";
 
-interface Props{
-  task:{
-    docId:string,
-    title:string,
-    detail:string,
-    CreatedAt:object
-  }
+interface Props {
+  task: {
+    docId: string;
+    title: string;
+    detail: string;
+    CreatedAt: object;
+  };
 }
 
-const ListsItem:React.FC<Props> = ({task}) => {
+const ListsItem: React.FC<Props> = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { dispatch } = useContext(AppContext);
 
-  const handleEdit = (task:any) => {
+  const handleEdit = (task: any) => {
     dispatch({
       type: MODAL_OPEN,
     });
     handleClose();
   };
 
-  const handleDelete = async (task:any) => {
+  const handleDelete = async (task: any) => {
     //データ削除
     try {
       await db.collection("tasks").doc(task.docId).delete();
@@ -60,7 +60,7 @@ const ListsItem:React.FC<Props> = ({task}) => {
     handleClose();
   };
 
-  const handleClick = (e:any) => {
+  const handleClick = (e: any) => {
     setAnchorEl(e.currentTarget);
   };
 
@@ -75,7 +75,7 @@ const ListsItem:React.FC<Props> = ({task}) => {
           <FolderIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={task.title} />
+      <ListItemText primary={props.task.title} />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="menu" onClick={handleClick}>
           <MoreHorizIcon />
@@ -87,8 +87,8 @@ const ListsItem:React.FC<Props> = ({task}) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleEdit(task)}>編集</MenuItem>
-          <MenuItem onClick={() => handleDelete(task)}>削除</MenuItem>
+          <MenuItem onClick={() => handleEdit(props.task)}>編集</MenuItem>
+          <MenuItem onClick={() => handleDelete(props.task)}>削除</MenuItem>
         </Menu>
       </ListItemSecondaryAction>
     </ListItem>

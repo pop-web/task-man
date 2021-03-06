@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import AppContext from "../contexts/AppContext";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -12,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { Menu as MenuIcon, AccountCircle } from "@material-ui/icons/";
 import Switch from "@material-ui/core/Switch";
+import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,22 +27,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MenuAppBar:React.FC = () => {
+interface Props {
+  props: any;
+}
+
+const MenuAppBar: React.FC<Props> = ({ props }) => {
   const classes = useStyles();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const { state } = useContext(AppContext);
   const open = Boolean(anchorEl);
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     setAuth(e.target.checked);
   };
 
-  const handleMenu = (e:any) => {
+  const handleMenu = (e: any) => {
     setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      props.history.push("login");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -96,8 +112,11 @@ const MenuAppBar:React.FC = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {state.auth.user ? state.auth.user.displayName : ""}
+                </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogOut}>ログアウト</MenuItem>
               </Menu>
             </div>
           )}
@@ -105,6 +124,6 @@ const MenuAppBar:React.FC = () => {
       </AppBar>
     </div>
   );
-}
+};
 
-export default MenuAppBar
+export default MenuAppBar;

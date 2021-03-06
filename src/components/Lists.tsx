@@ -1,11 +1,12 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import AppContext from "../contexts/AppContext";
 import OpenModalButton from "./OpenModalButton";
 import ListsItem from "./ListsItem";
+import AppBar from "./AppBar";
 import { Grid, Typography, List, makeStyles } from "@material-ui/core";
 import { READ_TASKS } from "../actions";
 
-import { db } from "../firebase";
+import firebase, { db } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,10 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists:React.FC = () => {
+const Lists: React.FC = (props: any) => {
   const { state, dispatch } = useContext(AppContext);
   const classes = useStyles();
-  const AddTaskFormRef = useRef(null);
 
   //データ取得
   const getData = async () => {
@@ -40,32 +40,38 @@ const Lists:React.FC = () => {
   };
 
   useEffect(() => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      !user && props.history.push("login");
+    });
+    return () => unSub();
+  });
+
+  useEffect(() => {
     getData();
     // eslint-disable-next-line
   }, []);
 
-  console.log(getData);
   return (
-    <div className={classes.root}>
-      <OpenModalButton />
-      <Grid item container>
-        <Grid item xs={12}>
-          <Typography variant="h6" className={classes.title}>
-            タスク一覧
-          </Typography>
-          <div className={classes.bg}>
-            <List>
-              {state.tasks.map((task:any, index:number) => (
-                <ListsItem
-                  key={index}
-                  task={task}
-                />
-              ))}
-            </List>
-          </div>
+    <>
+      <AppBar props={props} />
+      <div className={classes.root}>
+        <OpenModalButton />
+        <Grid item container>
+          <Grid item xs={12}>
+            <Typography variant="h6" className={classes.title}>
+              タスク一覧
+            </Typography>
+            <div className={classes.bg}>
+              <List>
+                {state.tasks.map((task: any, index: number) => (
+                  <ListsItem key={index} task={task} />
+                ))}
+              </List>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 };
 

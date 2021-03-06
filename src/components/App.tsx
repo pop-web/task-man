@@ -10,9 +10,10 @@ import { Container } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "../theme";
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   const initialState = {
     modal: false,
+    auth: {},
     tasks: [],
   };
 
@@ -21,15 +22,12 @@ const App:React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={{ state, dispatch }}>
-        <AppBar />
-        <Container>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={Lists} />
-              <Route exact path="/login" component={Login} />
-            </Switch>
-          </BrowserRouter>
-        </Container>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Lists} />
+            <Route exact path="/login" component={Login} />
+          </Switch>
+        </BrowserRouter>
         <CopyRight />
       </AppContext.Provider>
     </ThemeProvider>
