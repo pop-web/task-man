@@ -35,7 +35,7 @@ const ListsItem: React.FC<Props> = (props) => {
     dispatch({
       type: MODAL_OPEN,
     });
-    handleClose();
+    contextMenuClose();
   };
 
   const handleDelete = async (task: any) => {
@@ -57,14 +57,14 @@ const ListsItem: React.FC<Props> = (props) => {
       type: READ_TASKS,
       tasks: docs,
     });
-    handleClose();
+    contextMenuClose();
   };
 
   const handleClick = (e: any) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = () => {
+  const contextMenuClose = () => {
     setAnchorEl(null);
   };
 
@@ -85,7 +85,7 @@ const ListsItem: React.FC<Props> = (props) => {
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={contextMenuClose}
         >
           <MenuItem onClick={() => handleEdit(props.task)}>編集</MenuItem>
           <MenuItem onClick={() => handleDelete(props.task)}>削除</MenuItem>

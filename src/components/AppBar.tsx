@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import AppContext from "../contexts/AppContext";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,7 +11,7 @@ import {
   MenuItem,
   Menu,
 } from "@material-ui/core";
-import { Menu as MenuIcon, AccountCircle } from "@material-ui/icons/";
+import { AccountCircle } from "@material-ui/icons/";
 import Switch from "@material-ui/core/Switch";
 import firebase from "../firebase";
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  props: any;
+  props?: any;
 }
 
 const MenuAppBar: React.FC<Props> = ({ props }) => {
@@ -37,10 +37,6 @@ const MenuAppBar: React.FC<Props> = ({ props }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { state } = useContext(AppContext);
   const open = Boolean(anchorEl);
-
-  const handleChange = (e: any) => {
-    setAuth(e.target.checked);
-  };
 
   const handleMenu = (e: any) => {
     setAnchorEl(e.currentTarget);
@@ -59,30 +55,16 @@ const MenuAppBar: React.FC<Props> = ({ props }) => {
     }
   };
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      !user && setAuth(false);
+    });
+  });
+
   return (
     <div className={classes.root}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
             TASK MAN
           </Typography>

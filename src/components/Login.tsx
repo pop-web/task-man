@@ -1,11 +1,16 @@
 import { useContext } from "react";
+import AppBar from "./AppBar";
 import AppContext from "../contexts/AppContext";
 import { LOGIN } from "../actions";
-import { Redirect } from "react-router-dom";
-import { Avatar, Button, CssBaseline, Typography } from "@material-ui/core";
+import {
+  Container,
+  Avatar,
+  Button,
+  CssBaseline,
+  Typography,
+} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LogIn: React.FC = (props: any) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
   const Login = async (e: any) => {
     e.preventDefault();
@@ -49,29 +54,32 @@ const LogIn: React.FC = (props: any) => {
     }
   };
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={Login}
-          >
-            Googleでログイン
-          </Button>
-        </form>
-      </div>
-    </Container>
+    <>
+      <AppBar props={props} />
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={Login}
+            >
+              Googleでログイン
+            </Button>
+          </form>
+        </div>
+      </Container>
+    </>
   );
 };
 
