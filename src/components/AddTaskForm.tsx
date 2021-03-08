@@ -52,12 +52,17 @@ const AddTaskForm: React.FC = () => {
 
   const updateTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    db.collection("tasks").doc(docId).update({
-      docId,
-      title,
-      detail,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    try {
+      const docId = state.edit_task.docId;
+      db.collection("tasks").doc(docId).update({
+        docId,
+        title,
+        detail,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      alert(e.message);
+    }
     dispatch({
       type: MODAL_CLOSE,
     });
