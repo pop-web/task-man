@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { MODAL_CLOSE, READ_TASKS } from "../actions";
+import { MODAL_CLOSE, READ_TASKS, DONE_EDIT_TASK } from "../actions";
 import AppContext from "../contexts/AppContext";
 import {
   Button,
@@ -13,7 +13,7 @@ import firebase, { db } from "../firebase";
 
 const AddTaskForm: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [docId, setDocId] = useState("");
+  const [docId] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -71,10 +71,16 @@ const AddTaskForm: React.FC = () => {
     dispatch({
       type: MODAL_CLOSE,
     });
+    dispatch({
+      type: DONE_EDIT_TASK,
+    });
   };
   const handleClose = () => {
     dispatch({
       type: MODAL_CLOSE,
+    });
+    dispatch({
+      type: DONE_EDIT_TASK,
     });
     setTitle("");
     setDetail("");
@@ -84,6 +90,19 @@ const AddTaskForm: React.FC = () => {
     const disabled = title === "";
     setSubmitDisabled(disabled);
   }, [title]);
+
+  useEffect(() => {
+    Object.keys(state.edit_task).length
+      ? setIsEditing(true)
+      : setIsEditing(false);
+    if (isEditing) {
+      setTitle(state.edit_task.title);
+      setDetail(state.edit_task.detail);
+    } else {
+      setTitle("");
+      setDetail("");
+    }
+  }, [isEditing, state.edit_task]);
 
   return (
     <>
@@ -104,7 +123,9 @@ const AddTaskForm: React.FC = () => {
             type="text"
             margin="dense"
             value={title}
-            onChange={(e: any) => setTitle(e.target.value)}
+            onChange={(
+              e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+            ) => setTitle(e.target.value)}
             fullWidth
             variant="outlined"
           />
@@ -115,22 +136,31 @@ const AddTaskForm: React.FC = () => {
             autoComplete="off"
             margin="dense"
             value={detail}
-            onChange={(e: any) => setDetail(e.target.value)}
+            onChange={(
+              e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+            ) => setDetail(e.target.value)}
             fullWidth
             rows={4}
             variant="outlined"
           />
           <DialogActions>
-            <Button color="primary" onClick={addTask} disabled={submitDisabled}>
-              追加
-            </Button>{" "}
-            <Button
-              color="primary"
-              onClick={updateTask}
-              disabled={submitDisabled}
-            >
-              更新
-            </Button>{" "}
+            {!isEditing ? (
+              <Button
+                color="primary"
+                onClick={addTask}
+                disabled={submitDisabled}
+              >
+                追加
+              </Button>
+            ) : (
+              <Button
+                color="primary"
+                onClick={updateTask}
+                disabled={submitDisabled}
+              >
+                更新
+              </Button>
+            )}
             <Button color="primary" onClick={cancelTask}>
               キャンセル
             </Button>

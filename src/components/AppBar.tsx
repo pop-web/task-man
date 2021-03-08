@@ -6,13 +6,10 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  FormControlLabel,
-  FormGroup,
   MenuItem,
   Menu,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons/";
-import Switch from "@material-ui/core/Switch";
 import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({

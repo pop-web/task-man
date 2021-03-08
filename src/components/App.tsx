@@ -4,9 +4,7 @@ import AppContext from "../contexts/AppContext";
 import reducer from "../reducers";
 import Lists from "./Lists";
 import Login from "./Login";
-import AppBar from "./AppBar";
 import CopyRight from "./CopyRight";
-import { Container } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "../theme";
 
@@ -15,6 +13,7 @@ const App: React.FC = () => {
     modal: false,
     auth: {},
     tasks: [],
+    edit_task: {},
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

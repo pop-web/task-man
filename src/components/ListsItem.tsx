@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { MODAL_OPEN, READ_TASKS } from "../actions";
+import { MODAL_OPEN, READ_TASKS, EDIT_TASK } from "../actions";
 import AppContext from "../contexts/AppContext";
 
 import {
@@ -27,13 +27,17 @@ interface Props {
   };
 }
 
-const ListsItem: React.FC<Props> = (props) => {
+const ListsItem: React.FC<Props> = ({ task }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { dispatch } = useContext(AppContext);
 
   const handleEdit = (task: any) => {
     dispatch({
       type: MODAL_OPEN,
+    });
+    dispatch({
+      type: EDIT_TASK,
+      task,
     });
     contextMenuClose();
   };
@@ -75,7 +79,7 @@ const ListsItem: React.FC<Props> = (props) => {
           <FolderIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={props.task.title} />
+      <ListItemText primary={task.title} />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="menu" onClick={handleClick}>
           <MoreHorizIcon />
@@ -87,8 +91,8 @@ const ListsItem: React.FC<Props> = (props) => {
           open={Boolean(anchorEl)}
           onClose={contextMenuClose}
         >
-          <MenuItem onClick={() => handleEdit(props.task)}>編集</MenuItem>
-          <MenuItem onClick={() => handleDelete(props.task)}>削除</MenuItem>
+          <MenuItem onClick={() => handleEdit(task)}>編集</MenuItem>
+          <MenuItem onClick={() => handleDelete(task)}>削除</MenuItem>
         </Menu>
       </ListItemSecondaryAction>
     </ListItem>
