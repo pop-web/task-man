@@ -13,7 +13,6 @@ import firebase, { db } from "../firebase";
 
 const AddTaskForm: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [docId] = useState("");
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -50,11 +49,11 @@ const AddTaskForm: React.FC = () => {
     getData();
   };
 
-  const updateTask = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const updateTask = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       const docId = state.edit_task.docId;
-      db.collection("tasks").doc(docId).update({
+      await db.collection("tasks").doc(docId).update({
         docId,
         title,
         detail,
@@ -65,6 +64,9 @@ const AddTaskForm: React.FC = () => {
     }
     dispatch({
       type: MODAL_CLOSE,
+    });
+    dispatch({
+      type: DONE_EDIT_TASK,
     });
     setTitle("");
     setDetail("");
