@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import AppContext from "../contexts/AppContext";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -30,10 +30,20 @@ interface Props {
 
 const MenuAppBar: React.FC<Props> = ({ props }) => {
   const classes = useStyles();
-  const [auth] = useState(true);
+  const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const { state } = useContext(AppContext);
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        setAuth(false);
+        props.history.push("login");
+      }
+    });
+    return () => unSub();
+  }, [props.history]);
 
   const handleMenu = (e: any) => {
     setAnchorEl(e.currentTarget);
