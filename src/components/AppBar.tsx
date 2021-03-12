@@ -30,7 +30,7 @@ interface Props {
 
 const MenuAppBar: React.FC<Props> = ({ props }) => {
   const classes = useStyles();
-  const [auth, setAuth] = useState(true);
+  const [auth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const { state } = useContext(AppContext);
   const open = Boolean(anchorEl);
@@ -51,12 +51,6 @@ const MenuAppBar: React.FC<Props> = ({ props }) => {
       alert(error.message);
     }
   };
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      !user && setAuth(false);
-    });
-  });
 
   return (
     <div className={classes.root}>

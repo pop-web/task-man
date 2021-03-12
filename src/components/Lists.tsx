@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { READ_TASKS } from "../actions";
 
-import { db } from "../firebase";
+import firebase, { db } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +49,13 @@ const Lists: React.FC = (props: any) => {
     getData();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      !user && props.history.push("login");
+    });
+    return () => unSub();
+  });
 
   return (
     <>
