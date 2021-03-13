@@ -50,13 +50,6 @@ const Lists: React.FC = (props: any) => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    const unSub = firebase.auth().onAuthStateChanged((user) => {
-      !user && props.history.push("login");
-    });
-    return () => unSub();
-  });
-
   return (
     <>
       <OpenModalButton />
