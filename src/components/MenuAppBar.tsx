@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
+type Props = {
   props?: any;
-}
+};
 
 const MenuAppBar: React.FC<Props> = ({ props }) => {
   const classes = useStyles();

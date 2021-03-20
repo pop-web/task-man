@@ -18,14 +18,14 @@ import {
 } from "@material-ui/icons";
 import { db } from "../firebase";
 
-interface Props {
+type Props = {
   task: {
     docId: string;
     title: string;
     detail: string;
     CreatedAt: object;
   };
-}
+};
 
 const ListsItem: React.FC<Props> = ({ task }) => {
   const [anchorEl, setAnchorEl] = useState(null);

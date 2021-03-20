@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import AppBar from "./AppBar";
+import MenuAppBar from "./MenuAppBar";
 import AppContext from "../contexts/AppContext";
 import { LOGIN } from "../actions";
 import {
@@ -55,7 +55,7 @@ const LogIn: React.FC = (props: any) => {
   };
   return (
     <>
-      <AppBar props={props} />
+      <MenuAppBar props={props} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>

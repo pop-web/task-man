@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import AppContext from "../contexts/AppContext";
 import OpenModalButton from "./OpenModalButton";
 import ListsItem from "./ListsItem";
-import AppBar from "./AppBar";
+import MenuAppBar from "./MenuAppBar";
 import {
   Grid,
   Typography,
@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { READ_TASKS } from "../actions";
 
-import firebase, { db } from "../firebase";
+import { db } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +53,7 @@ const Lists: React.FC = (props: any) => {
   return (
     <>
       <OpenModalButton />
-      <AppBar props={props} />
+      <MenuAppBar props={props} />
       <Container>
         <div className={classes.root}>
           <Grid item container>
