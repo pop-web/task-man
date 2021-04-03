@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists: React.FC = (props: any) => {
+const Lists: React.FC<{}> = (props) => {
   const { state, dispatch } = useContext(AppContext);
   const classes = useStyles();
 

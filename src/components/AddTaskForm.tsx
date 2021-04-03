@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import firebase, { db } from "../firebase";
 
-const AddTaskForm: React.FC = () => {
+const AddTaskForm: React.FC<{}> = () => {
   const { state, dispatch } = useContext(AppContext);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
