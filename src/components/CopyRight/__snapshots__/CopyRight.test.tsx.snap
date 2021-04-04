@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page snapshot testing 1`] = `
+<div
+  className="MuiBox-root MuiBox-root-1"
+>
+  <p
+    className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-alignCenter"
+  >
+    Copyright © 
+    <a
+      className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorInherit"
+      href="/"
+      onBlur={[Function]}
+      onFocus={[Function]}
+    >
+      TASK MAN
+    </a>
+     
+    2021
+    .
+  </p>
+</div>
+`;
