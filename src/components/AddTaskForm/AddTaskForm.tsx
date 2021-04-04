@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { MODAL_CLOSE, READ_TASKS, DONE_EDIT_TASK } from "../actions";
-import AppContext from "../contexts/AppContext";
+import { MODAL_CLOSE, READ_TASKS, DONE_EDIT_TASK } from "../../actions";
+import AppContext from "../../contexts/AppContext";
 import {
   Button,
   TextField,
@@ -9,7 +9,7 @@ import {
   DialogActions,
   Dialog,
 } from "@material-ui/core";
-import firebase, { db } from "../firebase";
+import firebase, { db } from "../../firebase";
 
 const AddTaskForm: React.FC<{}> = () => {
   const { state, dispatch } = useContext(AppContext);

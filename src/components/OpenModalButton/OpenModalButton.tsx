@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { MODAL_OPEN } from "../actions";
-import AddTaskForm from "./AddTaskForm";
+import { MODAL_OPEN } from "../../actions";
+import AddTaskForm from "../AddTaskForm";
 import { Fab, makeStyles } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import AppContext from "../contexts/AppContext";
+import AppContext from "../../contexts/AppContext";
 
 const useStyles = makeStyles((theme) => ({
   addBtn: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OpenModalButton:React.FC = () => {
+const OpenModalButton: React.FC = () => {
   const { dispatch } = useContext(AppContext);
   const classes = useStyles();
   const handleClickOpen = () => {

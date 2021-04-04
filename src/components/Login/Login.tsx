@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import MenuAppBar from "./MenuAppBar";
-import AppContext from "../contexts/AppContext";
-import { LOGIN } from "../actions";
+import MenuAppBar from "../MenuAppBar";
+import AppContext from "../../contexts/AppContext";
+import { LOGIN } from "../../actions";
 import {
   Container,
   Avatar,
@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase from "../firebase";
+import firebase from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogIn: React.FC = (props: any) => {
+const Login: React.FC = (props: any) => {
   const classes = useStyles();
   const { dispatch } = useContext(AppContext);
 
@@ -83,4 +83,4 @@ const LogIn: React.FC = (props: any) => {
   );
 };
 
-export default LogIn;
+export default Login;

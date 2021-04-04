@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
-import { MODAL_OPEN, READ_TASKS, EDIT_TASK } from "../actions";
-import AppContext from "../contexts/AppContext";
+import { MODAL_OPEN, READ_TASKS, EDIT_TASK } from "../../actions";
+import AppContext from "../../contexts/AppContext";
 
 import {
   Avatar,
@@ -16,7 +16,7 @@ import {
   Folder as FolderIcon,
   MoreHoriz as MoreHorizIcon,
 } from "@material-ui/icons";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 type Props = {
   task: {

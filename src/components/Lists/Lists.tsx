@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import AppContext from "../contexts/AppContext";
-import OpenModalButton from "./OpenModalButton";
-import ListsItem from "./ListsItem";
-import MenuAppBar from "./MenuAppBar";
+import AppContext from "../../contexts/AppContext";
+import OpenModalButton from "../OpenModalButton";
+import ListsItem from "../ListsItem";
+import MenuAppBar from "../MenuAppBar";
 import {
   Grid,
   Typography,
@@ -10,9 +10,9 @@ import {
   makeStyles,
   Container,
 } from "@material-ui/core";
-import { READ_TASKS } from "../actions";
+import { READ_TASKS } from "../../actions";
 
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {

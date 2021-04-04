@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import AppContext from "../contexts/AppContext";
+import AppContext from "../../contexts/AppContext";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -10,7 +10,7 @@ import {
   Menu,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons/";
-import firebase from "../firebase";
+import firebase from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
