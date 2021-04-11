@@ -11,6 +11,7 @@ import {
   Container,
 } from "@material-ui/core";
 import { READ_TASKS } from "../../actions";
+import { RouteComponentProps } from "react-router-dom";
 
 import { db } from "../../firebase";
 
@@ -27,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Lists: React.FC<{}> = (props) => {
+interface Props extends RouteComponentProps<{}> {}
+
+const Lists: React.FC<Props> = (props) => {
   const { state, dispatch } = useContext(AppContext);
   const classes = useStyles();
 
@@ -53,7 +56,7 @@ const Lists: React.FC<{}> = (props) => {
   return (
     <>
       <OpenModalButton />
-      <MenuAppBar props={props} />
+      <MenuAppBar history={props.history} />
       <Container>
         <div className={classes.root}>
           <Grid item container>

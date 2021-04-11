@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons/";
 import firebase from "../../firebase";
+import * as H from "history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,10 +26,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  props?: any;
+  history: H.History;
 };
 
-const MenuAppBar: React.FC<Props> = ({ props }) => {
+const MenuAppBar: React.FC<Props> = (props) => {
+  console.log(props);
   const classes = useStyles();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);

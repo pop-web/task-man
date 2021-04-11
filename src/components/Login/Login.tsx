@@ -55,7 +55,7 @@ const Login: React.FC = (props: any) => {
   };
   return (
     <>
-      <MenuAppBar props={props} />
+      <MenuAppBar history={props} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
