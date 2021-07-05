@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login: React.FC = (props: any) => {
+const Login = (props: any) => {
   const classes = useStyles();
   const { dispatch } = useContext(AppContext);
 

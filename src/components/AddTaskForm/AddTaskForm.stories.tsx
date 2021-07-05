@@ -12,16 +12,16 @@ const value = {
   dispatch: action("dispatch"),
 };
 
-export default {
-  title: "AddTaskFrom",
-  component: AddTaskFrom,
-  decorators: [
-    (story: any) => (
-      <AppContext.Provider value={value}>{story()}</AppContext.Provider>
-    ),
-  ],
-};
+// export default {
+//   title: "AddTaskFrom",
+//   component: AddTaskFrom,
+//   decorators: [
+//     (story: any) => (
+//       <AppContext.Provider value={value}>{story()}</AppContext.Provider>
+//     ),
+//   ],
+// };
 
-const Template = () => <AddTaskFrom />;
+// const Template = () => <AddTaskFrom />;
 
-export const Default = Template.bind({});
+// export const Default = Template.bind({});

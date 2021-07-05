@@ -66,7 +66,7 @@ const Lists: React.FC<Props> = (props) => {
               </Typography>
               <div className={classes.bg}>
                 <List>
-                  {state.tasks.map((task: any, index: number) => (
+                  {state.tasks.map((task, index) => (
                     <ListsItem key={index} task={task} />
                   ))}
                 </List>

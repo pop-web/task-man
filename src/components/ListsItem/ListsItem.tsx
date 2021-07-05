@@ -18,22 +18,18 @@ import {
 } from "@material-ui/icons";
 import { db } from "../../firebase";
 
-type Typetask = {
+type taskProps = {
   docId: string;
   title: string;
   detail: string;
   CreatedAt: { [key: string]: string };
 };
 
-type Props = {
-  task: Typetask;
-};
-
-const ListsItem: React.FC<Props> = ({ task }) => {
+const ListsItem = (task: taskProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { dispatch } = useContext(AppContext);
 
-  const handleEdit = (task: Typetask) => {
+  const handleEdit = (task: taskProps) => {
     dispatch({
       type: MODAL_OPEN,
     });
@@ -44,7 +40,7 @@ const ListsItem: React.FC<Props> = ({ task }) => {
     contextMenuClose();
   };
 
-  const handleDelete = async (task: Typetask) => {
+  const handleDelete = async (task: taskProps) => {
     //データ削除
     try {
       await db.collection("tasks").doc(task.docId).delete();

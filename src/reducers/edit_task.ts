@@ -1,6 +1,6 @@
-import { EDIT_TASK,DONE_EDIT_TASK } from "../actions";
+import { EDIT_TASK, DONE_EDIT_TASK } from "../actions";
 
-const edit_task = (state = {}, action:any) => {
+const edit_task = (state = {}, action: any) => {
   switch (action.type) {
     case EDIT_TASK:
       return action.task;

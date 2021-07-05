@@ -1,6 +1,6 @@
 import { MODAL_OPEN, MODAL_CLOSE } from "../actions";
 
-const modal = (state = false, action:any) => {
+const modal = (state: boolean = false, action: any) => {
   switch (action.type) {
     case MODAL_OPEN:
       return true;
